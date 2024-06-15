@@ -11,11 +11,18 @@ const Empdata = ({id, name, email, role}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(API_URL);
-            const data = await res.json();
-            setEmp(data);
-            console.log(data);
-        }
+            try {
+                const res = await fetch(API_URL);
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await res.json();
+                setEmp(data);
+                console.log(data);
+            } catch (error) {
+                alert('Failed to fetch data: ' + error.message);
+            }
+        };
         fetchData();
     },[])
 
